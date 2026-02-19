@@ -1,0 +1,70 @@
+// เช็ค version ของ docker ที่ติดตั้งในเครื่อง
+docker -v 
+
+// ใช้เพื่อตรวจสอบว่า docker สามารถทำงานได้อย่างถูกต้องหรือไม่ โดยการรัน container ตัวอย่าง "hello-world"
+docker run hello-world
+
+// ใช้คำสั่งนี้เพื่อตรวจสอบสถานะของ container ทั้งหมดที่กำลังทำงานอยู่ในระบบของคุณ
+docker ps --all
+
+// ใช้คำสั่งนี้เพื่อตรวจสอบรายชื่อ images ทั้งหมดที่มีอยู่ในระบบของคุณ
+docker images
+
+// ใช้คำสั่งนี้เพื่อรัน container ใหม่จากอิมเมจ "busybox" และรันคำสั่ง "ping google.com" ภายใน container นั้น
+docker run busybox ping google.com
+
+// ใช้คำสั่งนี้เพื่อหยุด container ที่กำลังทำงานอยู่ โดย
+docker stop (container id or name)
+
+// ใช้คำสั่งนี้เพื่อดึง images จาก Docker hub โดยแทนที่ <images_name> โดยไม่ต้องรัน container นั้นทันที
+docker pull <images_name>
+
+// ใช้คำสั่งนี้เพื่อสร้าง container ใหม่จากอิมเมจ "busybox" โดยไม่ต้องรัน container นั้นทันที
+docker create busybox ping google.com
+
+// ใช้เพื่อรัน container
+docker start <container_id or name>
+
+// ใช้คำสั่งนีเพื่อตรวจสอบสถานะของ container ที่กำลังทำงานอยู่ในระบบ
+docker ps
+
+// ใช้คำสั่งนี้เพื่อลบ container ที่ไม่ต้องการ โดยการใส่ container_id หรือ name ของ container ที่ต้องการจะลบ
+docker rm <container_id or name>
+
+// ใช้คำสั่งนีเพื่อลบอิมเมจที่ไม่ต้องการอีกต่อไป 
+docker system prune
+
+// ใช้คำสั่งนีเพื่อรัน container ที่ใช้ภาพ nginx โดยการเปิด port 80 ของ container ไปยัง port 8080 ของ host ของคุณ
+docker run nginx
+
+// ใช้คำสั่งนี้เพื่อเข้าสู่เชลล์ของ container ที่กำลังทำงานอยู่ โดยแทนที่ <container_id or name> ด้วยชื่อ container ที่ต้องการ
+docker exec -it <container_id or name> sh
+
+// ใช้คำสั่งนี้เพื่อเข้าสู่เชลล์ของ container ที่กำลังทำงานอยู่ โดยแทนที่ <container_id or name> ด้วยชื่อ container ที่ต้องการ
+docker exec -it <container_id or name> bash
+
+cd/usr/share/nginx/html
+cat index.html
+
+// 80 แรกเข้าถึง browser 80 หลังเข้าถึง container
+docker run -p 80:80 nginx
+
+// ใช้คำสั่งนี้เพื่อรัน container ที่ใช้ภาพ nginx โดยการเปิด port 80 ของ container ไปยัง port 8000 ของ host ของคุณ
+docker run -d -p 8000:80 nginx
+
+// ใช้คำสั่งนี้เพื่อตรวจสอบรายละเอียดของอิมเมจ nginx ที่คุณได้ดึงมาจาก Docker Hub หรือสร้างขึ้นมาเอง
+docker image inspect nginx
+
+docker image ls
+
+docker image rm <image_id or name>
+
+docker pull wordpress
+docker pull mysql:5.7
+docker pull phpmyadmin/phpmyadmin
+
+docker network create
+
+docker run --name mysql --network wordpress -e MYSQL_ROOT_PASSWORD=1111 -e MYSQL_DATABASE=wordpress_db -e MYSQL_USER=wordpress -e MYSQL_PASSWORD=wordpress -d mysql:5.7
+docker run --name pma --network wordpress -p 8888:80 -e PMA_ARBITRARY=1 -d phpmyadmin/phpmyadmin
+docker run -d --name wordpress --network wordpress -p 888:80 -e WORDPRESS_DB_HOST=mysql -e WORDPRESS_DB_USER=wordpress -e WORDPRESS_DB_PASSWORD=wordpress -e WORDPRESS_DB_NAME=wordpress_db wordpress
